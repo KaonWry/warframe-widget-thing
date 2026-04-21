@@ -1,0 +1,4 @@
+server/openapi.json
+server/output.json
+server/.env
+server/__pycache__
