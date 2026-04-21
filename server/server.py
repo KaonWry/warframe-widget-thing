@@ -3,6 +3,7 @@ import json
 import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+import time
 from mappings import (
     region,
     mission_type,
@@ -33,8 +34,7 @@ async def periodic_world_state_fetcher():
     while True:
         # Run blocking HTTP request in a separate thread
         await asyncio.to_thread(fetch_world_state)
-        # Sleep for 5 minutes (300 seconds)
-        await asyncio.sleep(300)
+        await asyncio.sleep(1)
 
 
 @asynccontextmanager
@@ -64,6 +64,10 @@ async def get_fissures():
     fissures_raw = world_state_cache.get("data", {}).get("ActiveMissions", [])
     fissures = []
     for fissure in fissures_raw:
+        time_start = int(fissure.get("Activation").get("$date").get("$numberLong"))// 1000
+        time_end = int(fissure.get("Expiry").get("$date").get("$numberLong")) // 1000
+        time_now = int(time.time())
+        open_until = time_end - time_now
         fissures.append(
             {
                 "Region": region.get(str(fissure.get("Region", "0")), "Unknown"),
@@ -72,6 +76,9 @@ async def get_fissures():
                     str(fissure.get("MissionType", "0")), "Unknown"
                 ),
                 "Type": fissure_types.get(str(fissure.get("Modifier", "0")), "Unknown"),
+                "Start": time_start,
+                "End": time_end,
+                "Duration": open_until,
             }
         )
     return fissures
