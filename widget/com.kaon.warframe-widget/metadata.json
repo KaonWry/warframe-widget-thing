@@ -1,0 +1,24 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "kaonwry@gmail.com",
+                "Name": "Trystan Prastanov Gabriel Situmorang"
+            }
+        ],
+        "Category": "Utilities",
+        "Description": "A simple widget to monitor Warframe world state.",
+        "EnabledByDefault": true,
+        "Icon": "battery",
+        "Id": "com.kaon.warframe-widget",
+        "License": "GPL-2.0+",
+        "Name": "Warframe Widget",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "1.0",
+        "Website": ""
+    },
+    "KPackageStructure": "Plasma/Applet",
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
