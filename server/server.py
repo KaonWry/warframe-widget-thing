@@ -68,12 +68,13 @@ async def get_fissures():
             {
                 "Region": region.get(str(fissure.get("Region", "0")), "Unknown"),
                 "Node": node.get(str(fissure.get("Node", "0")), "Unknown"),
-                "MissionType": mission_type.get(str(fissure.get("MissionType", "0")), "Unknown"),
+                "MissionType": mission_type.get(
+                    str(fissure.get("MissionType", "0")), "Unknown"
+                ),
                 "Type": fissure_types.get(str(fissure.get("Modifier", "0")), "Unknown"),
             }
         )
-    return fissures_raw
-    # return fissures
+    return fissures
 
 
 if __name__ == "__main__":
