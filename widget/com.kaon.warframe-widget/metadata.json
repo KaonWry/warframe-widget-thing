@@ -9,7 +9,7 @@
         "Category": "Utilities",
         "Description": "A simple widget to monitor Warframe world state.",
         "EnabledByDefault": true,
-        "Icon": "battery",
+        "Icon": "games-hint",
         "Id": "com.kaon.warframe-widget",
         "License": "GPL-2.0+",
         "Name": "Warframe Widget",
