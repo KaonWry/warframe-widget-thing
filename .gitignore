@@ -2,3 +2,6 @@ server/openapi.json
 server/output.json
 server/__pycache__
 server/env
+server_old/__pycache__
+server_old/output.json
+server_old/openapi.json
