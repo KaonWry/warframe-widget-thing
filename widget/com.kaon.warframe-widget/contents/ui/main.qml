@@ -8,7 +8,6 @@ import org.kde.kirigami as Kirigami
 PlasmoidItem {
     id: root
 
-    // Logic moved from amain.qml
     property string responseText: "Fetching fissures..."
 
     function fetchFissures() {
