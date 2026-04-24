@@ -12,6 +12,7 @@ from mappings import (
     exclusive_weapons,
     sortie_boss,
     fissure_types,
+    circuit,
 )
 
 url = "https://api.warframe.com/cdn/worldState.php"
@@ -105,8 +106,25 @@ async def get_fissures():
     return fissures
 
 
+@app.get("/circuit")
+async def get_circuit():
+    circuit_start_time = 1776038400 # Monday, 20 April 2026 00:00 GMT
+    seconds_in_week = 3600 * 24 * 7
+    current_time = int(time.time())
+    weeks_since_start = (current_time - circuit_start_time) // seconds_in_week
+    circuit_index = (weeks_since_start % len(circuit)) + 1
+    current_rewards = circuit.get(str(circuit_index), [])
+    next_rotation = circuit_start_time + (weeks_since_start + 1) * seconds_in_week
+    time_left = next_rotation - current_time
+    return {
+        "week": circuit_index,
+        "rewards": current_rewards,
+        "next_rotation": next_rotation,
+        "time_left": time_left,
+    }
+
 
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("server:app", host="0.0.0.0", port=6969, reload=True)

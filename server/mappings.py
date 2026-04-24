@@ -362,3 +362,17 @@ fissure_types = {
     "VoidT5": "Requiem Fissure",
     "VoidT6": "Omnia Fissure",
 }
+
+circuit = {
+    "1": ["Excalibur", "Trinity", "Ember"],
+    "2": ["Loki", "Mag", "Rhino"],
+    "3": ["Ash", "Frost", "Nyx"],
+    "4": ["Saryn", "Vauban", "Nova"],
+    "5": ["Nekros", "Valkyr", "Oberon"],
+    "6": ["Hydroid", "Mirage", "Limbo"],
+    "7": ["Mesa", "Chroma", "Atlas"],
+    "8": ["Ivara", "Inaros", "Titania"],
+    "9": ["Nidus", "Octavia", "Harrow"],
+    "10": ["Gara", "Khora", "Revenant"],
+    "11": ["Garuda", "Baruuk", "Hildryn"],
+}
