@@ -6,3 +6,4 @@ server_old/__pycache__
 server_old/output.json
 server_old/openapi.json
 server/node_modules
+server/download.py
