@@ -126,13 +126,22 @@ async def get_circuit():
     seconds_in_week = 3600 * 24 * 7
     current_time = int(time.time())
     weeks_since_start = (current_time - circuit_start_time) // seconds_in_week
+    
+    # Current week
     circuit_index = (weeks_since_start % len(circuit)) + 1
     current_rewards = circuit.get(str(circuit_index), [])
+    
+    # Next week
+    next_week_index = ((weeks_since_start + 1) % len(circuit)) + 1
+    next_rewards = circuit.get(str(next_week_index), [])
+    
     next_rotation = circuit_start_time + (weeks_since_start + 1) * seconds_in_week
     time_left = next_rotation - current_time
+    
     return {
         "week": circuit_index,
         "rewards": current_rewards,
+        "next_rewards": next_rewards,
         "next_rotation": next_rotation,
         "time_left": time_left,
     }
