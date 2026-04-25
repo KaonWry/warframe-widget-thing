@@ -114,13 +114,6 @@ export default function FissuresList() {
                     </div>
                 )}
             </div>
-            
-            <footer className="p-3 bg-zinc-50 dark:bg-zinc-900/80 border-t border-zinc-100 dark:border-zinc-800">
-                <div className="flex justify-between items-center text-[9px] font-bold text-zinc-400 uppercase tracking-widest">
-                    <span>Source: WorldState</span>
-                    <span>v1.0</span>
-                </div>
-            </footer>
 
             <style jsx global>{`
                 .custom-scrollbar::-webkit-scrollbar {
