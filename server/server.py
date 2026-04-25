@@ -4,6 +4,7 @@ import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import time
+from fastapi.middleware.cors import CORSMiddleware
 from mappings import (
     region,
     mission_type,
@@ -49,6 +50,15 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Warframe Stuff", lifespan=lifespan)
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For development, allow all origins. Adjust for production.
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 async def root():
@@ -63,7 +73,11 @@ async def health_check():
 @app.get("/fissures")
 async def get_fissures():
     fissures_raw = world_state_cache.get("data", {}).get("ActiveMissions", [])
-    storms_raw = world_state_cache.get("data", {}).get("VoidStorms", [])
+    # storms_raw = world_state_cache.get("data", {}).get("VoidStorms", [])
+    
+    # Sort by tier before parsing
+    fissures_raw.sort(key=lambda x: x.get("ActiveMissionTier") or x.get("Modifier") or "")
+    
     fissures = []
     for fissure in fissures_raw:
         time_start = (
@@ -85,24 +99,24 @@ async def get_fissures():
                 "Duration": open_until,
             }
         )
-    for storm in storms_raw:
-        time_start = (
-            int(storm.get("Activation").get("$date").get("$numberLong")) // 1000
-        )
-        time_end = int(storm.get("Expiry").get("$date").get("$numberLong")) // 1000
-        time_now = int(time.time())
-        open_until = time_end - time_now
-        fissures.append(
-            {
-                "Region": region.get(str(storm.get("Region", "0")), "Unknown"),
-                "Node": node.get(str(storm.get("Node", "0")), "Unknown"),
-                "MissionType": "Void Storm",
-                "Type": storm.get("Modifier", "Unknown"),
-                "Start": time_start,
-                "End": time_end,
-                "Duration": open_until,
-            }
-        )
+    # for storm in storms_raw:
+    #     time_start = (
+    #         int(storm.get("Activation").get("$date").get("$numberLong")) // 1000
+    #     )
+    #     time_end = int(storm.get("Expiry").get("$date").get("$numberLong")) // 1000
+    #     time_now = int(time.time())
+    #     open_until = time_end - time_now
+    #     fissures.append(
+    #         {
+    #             "Region": region.get(str(storm.get("Region", "0")), "Unknown"),
+    #             "Node": node.get(str(storm.get("Node", "0")), "Unknown"),
+    #             "MissionType": "Void Storm",
+    #             "Type": storm.get("Modifier", "Unknown"),
+    #             "Start": time_start,
+    #             "End": time_end,
+    #             "Duration": open_until,
+    #         }
+    #     )
     return fissures
 
 
