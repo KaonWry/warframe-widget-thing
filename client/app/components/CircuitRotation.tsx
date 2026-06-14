@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import WidgetLayout from "./WidgetLayout"
 
 interface CircuitData {
     week: number
@@ -46,20 +47,24 @@ export default function CircuitRotation() {
     }
 
     return (
-        <div className="flex flex-col w-full max-w-md border border-zinc-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-950 overflow-hidden shadow-xl self-start">
-            <header className="p-5 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center bg-zinc-50/50 dark:bg-zinc-900/50 backdrop-blur-sm">
-                <div>
-                    <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-tight">The Circuit</h2>
-                    <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">Weekly Rotation</p>
-                </div>
-                {data && (
+        <WidgetLayout
+            title="The Circuit"
+            subtitle="Weekly Rotation"
+            headerExtra={
+                data && (
                     <div className="flex flex-col items-end">
                         <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">Resets in</span>
                         <span className="text-sm font-black text-indigo-500">{formatTimeLeft(data.time_left)}</span>
                     </div>
-                )}
-            </header>
-
+                )
+            }
+            footerContent={
+                <div className="flex justify-between items-center text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+                    <span>Steel Path Rotation</span>
+                    <span className="text-indigo-500/50 text-xs font-black">DUVIRI</span>
+                </div>
+            }
+        >
             <div className="p-8 flex flex-col gap-10">
                 {loading ? (
                     <div className="flex flex-col items-center justify-center py-12 gap-4">
@@ -129,13 +134,6 @@ export default function CircuitRotation() {
                     </>
                 )}
             </div>
-            
-            <footer className="p-4 bg-zinc-50 dark:bg-zinc-900/80 border-t border-zinc-100 dark:border-zinc-800 mt-auto">
-                <div className="flex justify-between items-center text-[10px] font-black text-zinc-400 uppercase tracking-widest">
-                    <span>Steel Path Rotation</span>
-                    <span className="text-indigo-500/50 text-xs font-black">DUVIRI</span>
-                </div>
-            </footer>
-        </div>
+        </WidgetLayout>
     )
 }
